@@ -1,33 +1,20 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
 const cors = require('cors');
-const knex = require('knex');
-
 if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
-
-const register = require('./controllers/register');
-const login = require('./controllers/login');
-const profile = require('./controllers/profile');
-
-const db = knex({
-    client: 'pg',
-    connection: {
-      connectionString : process.env.DATABASE_URL,
-      ssl: true
-    }
-});
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(cors());
+//Import Routes
+const authRoute = require('./routes/auth');
+const memberRoute = require('./routes/members');
 
-app.get('/', (req, res) => { res.send('it is working') });
-app.post('/login', login.handleSignin(db, bcrypt));
-app.post('/register', register.handleRegister(db, bcrypt));
-app.get('/profile/:id', profile.handleProfileGet(db));
+//Middleware
+app.use(express.json());
+app.use(cors());
+//Route Middlewares
+app.use('/api/user', authRoute);
+app.use('/api/membercontent', memberRoute);
 
 app.listen(process.env.PORT || 3001, () => {
-    console.log(`app is running on port ${process.env.PORT}.`);
+    console.log(`Server running on port ${process.env.PORT}.`);
 });
