@@ -1,6 +1,6 @@
 const handleRegister = (db, bcrypt) => (req, res) => {
-    const { email, name, password } = req.body;
-    if (!email || !name || !password || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+    const { email, password, username } = req.body;
+    if (!email || !password || !username || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
         return res.status(400).json('incorrect form submission');
     }
     const hash = bcrypt.hashSync(password);
@@ -16,7 +16,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
                 .returning('*')
                 .insert({
                     email: loginEmail[0],
-                    name: name,
+                    username: username,
                     joined: new Date()
                 })
                 .then(user => {

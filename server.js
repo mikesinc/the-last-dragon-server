@@ -1,20 +1,24 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const knex = require('knex');
 
 if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
 
 const register = require('./controllers/register');
-const signin = require('./controllers/login');
+const login = require('./controllers/login');
 const profile = require('./controllers/profile');
 
 const db = knex({
     client: 'pg',
     connection: {
-      connectionString : process.env.DATABASE_URL,
-      ssl: true
+      host: '127.0.0.1',
+      user: 'postgres',
+      password: 'chloe',
+      database: 'theLastDragon',
+      //connectionString : process.env.DATABASE_URL,
+      //ssl: true
     }
 });
 
@@ -24,7 +28,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/', (req, res) => { res.send('it is working') });
-app.post('/login', signin.handleSignin(db, bcrypt));
+app.post('/login', login.handleSignin(db, bcrypt));
 app.post('/register', register.handleRegister(db, bcrypt));
 app.get('/profile/:id', profile.handleProfileGet(db));
 
