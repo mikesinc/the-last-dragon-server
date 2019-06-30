@@ -18,7 +18,7 @@ const handleSignin = (db, bcrypt) => (req, res) => {
                     .then(user => {
                         // res.send({ user: user[0].id });
                         //Create and assign a token
-                        const token = jwt.sign({ _id: user[0].id }, process.env.TOKEN_SECRET);
+                        const token = jwt.sign({ _id: user[0].username }, process.env.TOKEN_SECRET);
                         res.header('auth-token', token).send(token);
                     })
                     .catch(err => res.status(400).send("incorrect email or password"));
