@@ -16,9 +16,11 @@ const handleSignin = (db, bcrypt) => (req, res) => {
                 return db.select('*').from('users')
                     .where('email', '=', email)
                     .then(user => {
-                        // res.send({ user: user[0].id });
                         //Create and assign a token
-                        const token = jwt.sign({ _id: user[0].username }, process.env.TOKEN_SECRET);
+                        const token = jwt.sign({ 
+                            _id: user[0].username,
+                            exp: new Date().getTime() + 60*60*1000
+                        }, process.env.TOKEN_SECRET);
                         res.header('auth-token', token).send(token);
                     })
                     .catch(err => res.status(400).send("incorrect email or password"));

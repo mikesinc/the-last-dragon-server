@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const register = require('./register');
-const login = require('./login');
+const register = require('../controllers/register');
+const login = require('../controllers/login');
 const knex = require('knex');
 const bcrypt = require('bcryptjs');
 // const profile = require('./profile');
