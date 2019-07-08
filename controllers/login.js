@@ -18,7 +18,7 @@ const handleSignin = (db, bcrypt) => (req, res) => {
                     .then(user => {
                         //Create and assign a token
                         const token = jwt.sign({ 
-                            _id: user[0].username,
+                            id: user[0].username,
                             exp: new Date().getTime() + 60*60*1000
                         }, process.env.TOKEN_SECRET);
                         res.header('auth-token', token).send(token);
