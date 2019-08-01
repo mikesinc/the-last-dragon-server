@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const handleRegister = (db, bcrypt) => (req, res) => {
     //Register Form Validation
     const { error } = registerValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
 
     //Create new user
     const { email, password } = req.body;
@@ -22,10 +24,10 @@ const handleRegister = (db, bcrypt) => (req, res) => {
                     .insert({
                         email: loginEmail[0],
                         username: req.body.username,
-                        joined: new Date()
+                        joined: new Date(),
+                        verified: false
                     })
                     .then(user => {
-                        // res.json(user[0]);
                         const token = jwt.sign({
                             id: user[0].username,
                             exp: new Date().getTime() + 60 * 60 * 1000

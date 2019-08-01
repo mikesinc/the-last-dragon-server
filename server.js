@@ -12,6 +12,7 @@ const authoriseRoute = require('./routes/authorise');
 app.use(express.json());
 app.use(cors());
 //Route Middlewares
+app.get('/wake-up', (req, res) => res.json('👌'));
 app.use('/api/user', authenticateRoute);
 app.use('/api/verify', authoriseRoute);
 
