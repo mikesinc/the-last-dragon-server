@@ -10,17 +10,17 @@ const bcrypt = require('bcryptjs');
 const db = knex({
     client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        user: 'postgres',
-        database: 'theLastDragon',
-        password: 'chloe',
-        //   connectionString : process.env.DATABASE_URL,
-        //   ssl: true
+        // host: '127.0.0.1',
+        // user: 'postgres',
+        // database: 'theLastDragon',
+        // password: 'chloe',
+          connectionString : process.env.DATABASE_URL,
+          ssl: true
     }
 });
 
 
-
+router.get('/wake-up', (req, res) => res.json('👌'));
 router.get('/', (req, res) => res.send('Server up and running.'))
 router.post('/register', register.handleRegister(db, bcrypt));
 router.post('/login', login.handleSignin(db, bcrypt));
