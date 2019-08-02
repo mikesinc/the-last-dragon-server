@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(cors());
 //Route Middlewares
 
-app.use('/api/user', authenticateRoute);
-app.use('/api/verify', authoriseRoute);
+app.use('/api/user', cors(), authenticateRoute);
+app.use('/api/verify', cors(), authoriseRoute);
 
 app.listen(process.env.PORT || 3001, () => {
     console.log(`Server running on port ${process.env.PORT}.`);
