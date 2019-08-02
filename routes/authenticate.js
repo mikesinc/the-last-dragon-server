@@ -4,6 +4,7 @@ const login = require('../controllers/login');
 const emailController = require('../controllers/confirm');
 const knex = require('knex');
 const bcrypt = require('bcryptjs');
+const cors = require('cors');
 // const profile = require('./profile');
 
 //Connect to DB
@@ -19,6 +20,7 @@ const db = knex({
     }
 });
 
+router.use(cors());
 
 router.get('/wake-up', (req, res) => res.json('👌'));
 router.get('/', (req, res) => res.send('Server up and running.'))
