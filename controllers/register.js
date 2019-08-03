@@ -19,12 +19,13 @@ const handleRegister = (db, bcrypt) => (req, res) => {
             .into('login')
             .returning('email', 'username')
             .then(loginEmail => {
+                console.log(loginEmail);
                 return trx('users')
                     .returning('*')
                     .insert({
                         email: loginEmail[0],
                         //TRIED LOGINEMAIL ARRAY?
-                        username: loginEmail[1],
+                        username: username,
                         joined: new Date(),
                         verified: false
                     })
