@@ -42,7 +42,6 @@ exports.confirmEmail = (db) => (req, res) => {
                     .update({ verified: true }, ['id', 'verified'])
                     .then((updatedRows) => {
                         updatedRows === [{ id: id, verified: true }]
-                        res.json({ msg: msgs.confirmed })
                     })
                     .catch(err => res.status(400).send(err.detail))
             }
