@@ -9,7 +9,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
     }
 
     //Create new user
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
     const hash = bcrypt.hashSync(password);
     return db.transaction(trx => {
         trx.insert({
@@ -19,19 +19,17 @@ const handleRegister = (db, bcrypt) => (req, res) => {
             .into('login')
             .returning('email')
             .then(loginEmail => {
-                console.log(loginEmail);
                 return trx('users')
                     .returning('*')
                     .insert({
                         email: loginEmail[0],
-                        //TRIED LOGINEMAIL ARRAY?
-                        username: req.body.username,
+                        username: username,
                         joined: new Date(),
                         verified: false
                     })
                     .then(user => {
                         const token = jwt.sign({
-                            id: user[0].username,
+                            id: username,
                             exp: new Date().getTime() + 60 * 60 * 1000
                         }, process.env.TOKEN_SECRET);
                         res.header('auth-token', token).send(token);
