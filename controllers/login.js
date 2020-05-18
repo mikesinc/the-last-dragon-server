@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 //create access token
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.TOKEN_SECRET, { expiresIn: "15s" });
+  return jwt.sign(user, process.env.TOKEN_SECRET, { expiresIn: "15m" });
 }
 
 const handleSignin = (db, bcrypt) => (req, res) => {
