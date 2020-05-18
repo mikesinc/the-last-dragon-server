@@ -25,10 +25,11 @@ const handleDelete = (db, bcrypt) => (req, res) => {
     //delete refreshtoken on user logout
     try {
       db.delete('refreshtoken').from('refreshtokens').where('refreshtoken', '=', refreshToken)
-      .then(data => res.sendStatus(204))
+      .then(data => console.log(data))
       } catch (err) {
         console.log(err);
       }
+    res.sendStatus(204)
 }
 
 module.exports = {
