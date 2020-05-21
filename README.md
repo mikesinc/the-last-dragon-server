@@ -1,5 +1,6 @@
-# the-last-dragon-server
-Node.js server backend for the The Last Dragon website
+# Backend for The Last Dragon website
+
+### (Node.js | Authentication | Secure Password Storage | jwt Authorisation | PostgreSQL database)
 
 Hosted on Heroku, includes:
 * user login/register (authentication)
